@@ -1,48 +1,42 @@
-import { stripe } from "../stripe";
+import { paddle } from "../paddle";
 import config from "../config";
 import { UserService } from "./user";
 
 export const BillingService = {
   async createCheckoutSession(userId, planId) {
-    const plan = config.stripe.plans[planId];
+    const plan = config.paddle.plans[planId];
     if (!plan) throw new Error("Invalid plan selected");
+    if (!plan.paddlePriceId) throw new Error("Missing Paddle price ID for this plan");
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: `${config.stripe.plans[planId].name}`,
-              description: `Purchase ${plan.credits} credits to perform AI generations.`,
-            },
-            unit_amount: plan.price,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `${config.auth.url}/pricing?success=true`,
-      cancel_url: `${config.auth.url}/pricing?canceled=true`,
-      metadata: { userId, credits: plan.credits.toString() },
+    const transaction = await paddle.transactions.create({
+      items: [{ priceId: plan.paddlePriceId, quantity: 1 }],
+      customData: { userId, credits: plan.credits.toString() },
+      checkout: {
+        url: `${config.auth.url}/pricing?success=true`,
+      },
     });
 
-    return session.url;
+    return transaction.checkout.url;
   },
 
   async handleWebhook(body, signature) {
-    const event = stripe.webhooks.constructEvent(body, signature, config.stripe.webhookSecret);
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object;
-      const userId = session.metadata.userId;
-      const credits = parseInt(session.metadata.credits || "0", 10);
+    const eventData = await paddle.webhooks.unmarshal(
+      body,
+      config.paddle.webhookSecret,
+      signature
+    );
+
+    if (eventData.eventType === "transaction.completed") {
+      const transaction = eventData.data;
+      const userId = transaction.customData?.userId;
+      const credits = parseInt(transaction.customData?.credits || "0", 10);
 
       if (userId && credits > 0) {
         await UserService.addCredits(userId, credits);
         return { success: true, userId, credits };
       }
     }
+
     return { success: false };
   }
 };
