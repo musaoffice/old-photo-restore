@@ -16,19 +16,31 @@ const config = {
   paddle: {
   apiKey: process.env.PADDLE_API_KEY,
   webhookSecret: process.env.PADDLE_WEBHOOK_SECRET,
-  environment: process.env.PADDLE_ENVIRONMENT || "sandbox", // "sandbox" or "production"
+  environment: process.env.PADDLE_ENVIRONMENT || "sandbox",
   plans: {
+    basic: {
+      id: "basic",
+      name: "Basic Pack",
+      credits: 100,
+      paddlePriceId: process.env.PADDLE_PRICE_BASIC,
+    },
     standard: {
       id: "standard",
       name: "Standard Pack",
-      credits: 1000,
-      paddlePriceId: process.env.PADDLE_PRICE_STANDARD, // pri_... from your Paddle dashboard
+      credits: 250,
+      paddlePriceId: process.env.PADDLE_PRICE_STANDARD,
     },
     pro: {
       id: "pro",
-      name: "Pro Pack",
+      name: "Professional Pack",
+      credits: 600,
+      paddlePriceId: process.env.PADDLE_PRICE_PRO,
+    },
+    business: {
+      id: "business",
+      name: "Business Pack",
       credits: 2000,
-      paddlePriceId: process.env.PADDLE_PRICE_PRO, // pri_... from your Paddle dashboard
+      paddlePriceId: process.env.PADDLE_PRICE_BUSINESS,
     }
   }
 },
