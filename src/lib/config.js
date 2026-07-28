@@ -13,25 +13,25 @@ const config = {
     url: process.env.NEXTAUTH_URL || "http://localhost:3000",
     webhook_url: process.env.WEBHOOK_URL || process.env.NEXTAUTH_URL || "http://localhost:3000",
   },
-  stripe: {
-    publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    secretKey: process.env.STRIPE_SECRET_KEY,
-    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
-    plans: {
-      standard: {
-        id: "standard",
-        name: "Standard Pack",
-        credits: 1000, // $5 = 1000 credits (200 credits per dollar)
-        price: 500, // $5.00
-      },
-      pro: {
-        id: "pro",
-        name: "Pro Pack",
-        credits: 2000, // $10 = 2000 credits
-        price: 1000, // $10.00
-      }
+  paddle: {
+  apiKey: process.env.PADDLE_API_KEY,
+  webhookSecret: process.env.PADDLE_WEBHOOK_SECRET,
+  environment: process.env.PADDLE_ENVIRONMENT || "sandbox", // "sandbox" or "production"
+  plans: {
+    standard: {
+      id: "standard",
+      name: "Standard Pack",
+      credits: 1000,
+      paddlePriceId: process.env.PADDLE_PRICE_STANDARD, // pri_... from your Paddle dashboard
+    },
+    pro: {
+      id: "pro",
+      name: "Pro Pack",
+      credits: 2000,
+      paddlePriceId: process.env.PADDLE_PRICE_PRO, // pri_... from your Paddle dashboard
     }
-  },
+  }
+},
   ai: {
     apiKey: process.env.MUAPIAPP_API_KEY || process.env.HEADSHOT_API_KEY,
     submitEndpoint: "https://api.muapi.ai/api/v1/gpt-image-2-image-to-image",
