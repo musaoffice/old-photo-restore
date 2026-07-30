@@ -44,9 +44,11 @@ export default function Navbar() {
         
         {/* Logo and Brand Title (Visible at all times) */}
         <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-[1.02] active:scale-95">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white font-extrabold text-lg shadow-md shadow-primary/30">
-            {logoLetter}
-          </div>
+         <img
+  src="/logo.png"
+  alt={appName}
+  className="h-9 w-9 rounded-lg object-cover shadow-md shadow-primary/30"
+/>
           <span className="text-lg font-black tracking-tight text-primary-text text-nowrap">
             {appName}
           </span>
