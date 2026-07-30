@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import Navbar from "../components/Navbar";
 import config from "@/lib/config";
 import PaddleScript from "@/components/PaddleScript";
+export const dynamic = "force-dynamic";
 const font = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
