@@ -22,11 +22,7 @@ function LoginContent() {
       <div className="relative bg-bg-card border border-divider w-full max-w-md rounded-lg p-8 space-y-8 shadow-2xl animate-scale-up">
         <div className="flex flex-col items-center text-center space-y-4">
           <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-2xl text-primary font-black shadow-md shadow-primary/15">
-            <img
-  src="/logo.png"
-  alt={appName}
-  className="h-9 w-9 rounded-lg object-cover shadow-md shadow-primary/30"
-/>
+         M
           </div>
           <h2 className="text-2xl font-black uppercase tracking-tight">Sign In to Studio</h2>
           <p className="text-xs font-semibold text-secondary-text leading-relaxed px-4">
