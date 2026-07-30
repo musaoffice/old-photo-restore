@@ -5,7 +5,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { IoClose, IoMenu } from "react-icons/io5";
-import { FiMoon, FiSun, FiLogOut, FiDollarSign, FiPlus, FiUser } from "react-icons/fi";
+import { FiMoon, FiSun, FiLogOut, FiPlus, FiUser } from "react-icons/fi";
+import { FaCoins } from "react-icons/fa";
 import { SiVercel } from "react-icons/si";
 import config from "@/lib/config";
 
@@ -83,7 +84,7 @@ export default function Navbar() {
               {/* Credit Balance indicator */}
               <div className="flex items-center h-9 border border-divider rounded-l bg-bg-page/30 overflow-hidden pr-2">
                 <span className="font-bold text-[13px] px-3 flex items-center text-primary-text gap-1">
-                  <FiDollarSign className="text-emerald-500 text-xs" />
+                  <FaCoins className="text-amber-400 text-xs" />
                   {session.user.credits !== undefined ? session.user.credits : 0}
                 </span>
                 <Link
@@ -143,7 +144,7 @@ export default function Navbar() {
         <div className="flex md:hidden items-center gap-2">
           {status === "authenticated" && (
             <div className="flex items-center h-8 border border-divider rounded bg-bg-page/30 px-2.5 text-xs font-bold text-primary-text gap-0.5">
-              <FiDollarSign className="text-emerald-500 text-[10px]" />
+              <FaCoins className="text-amber-400 text-[10px]" />
               {session.user.credits !== undefined ? session.user.credits : 0}
             </div>
           )}
