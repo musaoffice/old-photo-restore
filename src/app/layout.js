@@ -3,7 +3,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "../components/Navbar";
 import config from "@/lib/config";
-
+import PaddleScript from "@/components/PaddleScript";
 const font = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
