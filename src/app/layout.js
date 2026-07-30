@@ -7,7 +7,7 @@ import PaddleScript from "@/components/PaddleScript";
 const font = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "VintageRestore - Restore Old and Damaged Photos Instantly",
+  title: "Memorsify - Restore Old and Damaged Photos Instantly",
   description: "Restore face clarity, remove scratches, and colorize black-and-white photos with advanced AI restoration technology.",
 };
 
