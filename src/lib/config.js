@@ -3,7 +3,7 @@
  */
 
 const config = {
-  appName: "Old Photo Restore",
+  appName: "Memorsify",
   auth: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
