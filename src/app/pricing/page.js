@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer";
 import { FaCheck, FaInfoCircle } from "react-icons/fa";
 import axios from "axios";
@@ -16,11 +17,12 @@ const PLANS = [
 
 export default function Pricing() {
   const { data: session, status } = useSession();
+  const router = useRouter();
   const [loadingPlan, setLoadingPlan] = useState(null);
 
   const handleCheckout = async (planId) => {
     if (status !== "authenticated") {
-      toast.error("You must sign in with Google to purchase credit packages.");
+      router.push("/login");
       return;
     }
 
@@ -34,7 +36,7 @@ export default function Pricing() {
       }
     } catch (err) {
       console.error(err);
-      toast.error(err.response?.data?.error || "Failed to trigger Stripe checkout session.");
+      toast.error(err.response?.data?.error || "Failed to trigger checkout session.");
     } finally {
       setLoadingPlan(null);
     }
@@ -56,7 +58,6 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-5xl">
           {PLANS.map((plan) => (
             <div
@@ -76,13 +77,13 @@ export default function Pricing() {
                   <h3 className="text-sm font-extrabold uppercase tracking-wide text-primary-text">{plan.name}</h3>
                   <p className="text-2xl font-black tracking-tight text-white">{plan.price}</p>
                 </div>
-                
+
                 <div className="text-xs bg-bg-page/50 border border-divider/30 p-3 rounded text-center font-extrabold text-primary">
                   {plan.credits} Art Credits
                 </div>
 
                 <p className="text-xs text-secondary-text leading-relaxed font-medium min-h-[3rem]">{plan.description}</p>
-                
+
                 <ul className="space-y-2 border-t border-divider/30 pt-4 text-xs font-semibold text-secondary-text">
                   <li className="flex items-center gap-2">
                     <FaCheck className="text-primary text-[10px]" />
